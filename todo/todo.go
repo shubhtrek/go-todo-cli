@@ -28,3 +28,26 @@ func LoadTodos(filename string) ([]Todo, error) {
 	err = json.Unmarshal(data, &todos)
 	return todos, err
 }
+
+func SaveTodos(filename string, todos []Todo) error {
+	data, err := json.MarshalIndent(todos, "", "  ")
+	if err != nil {
+		return err
+	}
+	return os.WriteFile(filename, data, 0644)
+}
+
+func AddTodo(todos []Todo, title string) []Todo {
+	id := 1
+	if len(todos) > 0 {
+		id = todos[len(todos)-1].ID + 1
+	}
+
+	newTodo := Todo{
+		ID:    id,
+		Title: title,
+		Done:  false,
+	}
+
+	return append(todos, newTodo)
+}
