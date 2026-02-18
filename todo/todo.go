@@ -2,6 +2,7 @@ package todo
 
 import (
 	"encoding/json"
+	"errors"
 	"os"
 )
 
@@ -50,4 +51,23 @@ func AddTodo(todos []Todo, title string) []Todo {
 	}
 
 	return append(todos, newTodo)
+}
+
+func DeleteTodo(todos []Todo, id int) ([]Todo, error) {
+	for i, t := range todos {
+		if t.ID == id {
+			return append(todos[:i], todos[i+1:]...), nil
+		}
+	}
+	return todos, errors.New("todo not found")
+}
+
+func MarkDone(todos []Todo, id int) ([]Todo, error) {
+	for i, t := range todos {
+		if t.ID == id {
+			todos[i].Done = true
+			return todos, nil
+		}
+	}
+	return todos, errors.New("todo not found")
 }
