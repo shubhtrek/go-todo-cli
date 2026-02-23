@@ -33,5 +33,14 @@ func main() {
 		choiceStr = strings.TrimSpace(choiceStr)
 		choice, _ := strconv.Atoi(choiceStr)
 
+		switch choice {
+		case 1:
+			fmt.Print("Enter todo title: ")
+			title, _ := reader.ReadString('\n')
+			title = strings.TrimSpace(title)
+
+			todos = todo.AddTodo(todos, title)
+			_ = todo.SaveTodos(dataFile, todos)
+			fmt.Println("✅ Todo added")
 	}
 }
